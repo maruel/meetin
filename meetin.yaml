@@ -1,0 +1,89 @@
+# Copyright 2021 Marc-Antoine Ruel. All rights reserved.
+# Use of this source code is governed under the Apache License, Version 2.0
+# that can be found in the LICENSE file.
+
+light:
+  - name: "Meetin ring"
+    platform: neopixelbus
+    id: lumiere
+    pin: RX
+    num_leds: 24
+    effects:
+      - addressable_lambda:
+          name: "30m"
+          update_interval: 16ms
+          lambda: |-
+            // Configuration.
+            // Durée du meeting en secondes:
+            const int duree = 30*60;
+            // Get out en secondes:
+            const int extra = 2*60;
+            const int flash = 3;
+            const int offset = 12;
+            static int start;
+            if (initial_run) {
+              start = millis();
+            }
+            const int restant = duree-extra;
+            int since = (millis() - start) / 1000;
+            if (since >= duree) {
+              // Done. Do not make a call since there could be a race condition
+              // with back-to-back meetings, so just turn the lights off.
+              //id(lumiere).turn_off().perform();
+              it.all() = Color(0, 0, 0);
+            } else if (since >= restant) {
+              // Get out.
+              if ((since / flash) & 1) {
+                it.all() = Color(255, 0, 0);
+              } else {
+                it.all() = Color(0, 0, 0);
+              }
+            } else {
+              int l = it.size();
+              int v = (l * since / restant);
+              for (int i = 0; i < v; i++) {
+                it[(i + offset) % l] = Color(255, 0, 0);
+              }
+              for (int i = v; i < l; i++) {
+                it[(i + offset) % l] = Color(0, 255, 0);
+              }
+            }
+      - addressable_lambda:
+          name: "60m"
+          update_interval: 16ms
+          lambda: |-
+            // Configuration.
+            // Durée du meeting en secondes:
+            const int duree = 60*60;
+            // Get out en secondes:
+            const int extra = 2*60;
+            const int flash = 3;
+            const int offset = 12;
+            static int start;
+            if (initial_run) {
+              start = millis();
+            }
+            const int restant = duree-extra;
+            int since = (millis() - start) / 1000;
+            if (since >= duree) {
+              // Done. Do not make a call since there could be a race condition
+              // with back-to-back meetings, so just turn the lights off.
+              //id(lumiere).turn_off().perform();
+              it.all() = Color(0, 0, 0);
+            } else if (since >= restant) {
+              // Get out.
+              if ((since / flash) & 1) {
+                it.all() = Color(255, 0, 0);
+              } else {
+                it.all() = Color(0, 0, 0);
+              }
+            } else {
+              int l = it.size();
+              int v = (l * since / restant);
+              for (int i = 0; i < v; i++) {
+                it[(i + offset) % l] = Color(255, 0, 0);
+              }
+              for (int i = v; i < l; i++) {
+                it[(i + offset) % l] = Color(0, 255, 0);
+              }
+            }
