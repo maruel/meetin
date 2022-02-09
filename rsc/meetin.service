@@ -1,0 +1,18 @@
+# Copyright 2022 Marc-Antoine Ruel. All rights reserved.
+# Use of this source code is governed under the Apache License, Version 2.0
+# that can be found in the LICENSE file.
+
+# See https://github.com/maruel/meetin for more information.
+
+[Unit]
+Description=Meetin'
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=%h/src/meetin
+ExecStart=%h/go/bin/meetin -cid CALENDAR_ID -hahost HA_HOST:8123
+Restart=always
+ExecStop=/bin/kill -s INT $MAINPID
+
+[Install]
+WantedBy=default.target

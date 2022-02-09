@@ -34,8 +34,19 @@ configuration similar to what [meetin.yaml](meetin.yaml) defines.
 
 ## Usage
 
-
 ```
 go install github.com/maruel/meetin
-meetin -hahost <HA_HOST>:8123 -cid <SECONDARY CALENDAR> -path <PATH_TO_SECRET_FILES>
+meetin -hahost <HA_HOST>:8123 -cid <CALENDAR_ID> -path <PATH_TO_SECRET_FILES>
+```
+
+Installing permanently when you login:
+
+```
+cp rsc/meetin.service to $HOME/.config/systemd/user/
+# Replace HA_HOST and CALENDAR_ID as relevant.
+vim $HOME/.config/systemd/user/meetin.service
+systemctl --user daemon-reload
+systemctl --user enable meetin
+systemctl --user start meetin
+journalctl --user -u meetin -f
 ```
