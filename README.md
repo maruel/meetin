@@ -2,6 +2,8 @@
 
 Loads events from your calendar and draw a countdown on LEDs.
 
+![Picture](https://raw.githubusercontent.com/wiki/maruel/meetin/meetin.jpg)
+
 
 ## Setup
 
