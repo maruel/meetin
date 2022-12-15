@@ -3,11 +3,11 @@ module github.com/maruel/meetin
 go 1.16
 
 require (
-	cloud.google.com/go v0.86.0 // indirect
+	cloud.google.com/go/compute v1.14.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
-	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
-	golang.org/x/oauth2 v0.0.0-20210628180205-a41e5a781914
-	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
-	google.golang.org/api v0.50.0
-	google.golang.org/genproto v0.0.0-20210708141623-e76da96a951f // indirect
+	github.com/googleapis/enterprise-certificate-proxy v0.2.1 // indirect
+	golang.org/x/net v0.4.0 // indirect
+	golang.org/x/oauth2 v0.3.0
+	google.golang.org/api v0.105.0
+	google.golang.org/genproto v0.0.0-20221207170731-23e4bf6bdc37 // indirect
 )
