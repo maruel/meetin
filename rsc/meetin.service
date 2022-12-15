@@ -9,6 +9,7 @@ Description=Meetin'
 Wants=network-online.target
 
 [Service]
+Type=simple
 WorkingDirectory=%h/src/meetin
 ExecStart=%h/go/bin/meetin -cid CALENDAR_ID -hahost HA_HOST:8123
 Restart=always
