@@ -11,7 +11,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 	"os/signal"
@@ -47,7 +47,7 @@ func mainImpl() error {
 		return errors.New("unexpected arguments")
 	}
 	if *q {
-		log.SetOutput(ioutil.Discard)
+		log.SetOutput(io.Discard)
 	}
 	if *p <= 0 || *p > 1000000000 {
 		return errors.New("invalid number of pixels")
@@ -55,7 +55,7 @@ func mainImpl() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	ch := make(chan os.Signal)
+	ch := make(chan os.Signal, 1)
 	go func() {
 		<-ch
 		cancel()

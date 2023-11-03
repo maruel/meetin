@@ -8,7 +8,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"time"
@@ -28,7 +27,8 @@ type Calendar struct {
 // NewCalendar returns an initialized calendar client.
 func NewCalendar(ctx context.Context, credentialsFile, tokenFile string) (*Calendar, error) {
 	// https://developers.google.com/workspace/guides/create-credentials
-	b, err := ioutil.ReadFile(credentialsFile)
+	//#nosec G304
+	b, err := os.ReadFile(credentialsFile)
 	if err != nil {
 		return nil, fmt.Errorf("unable to read client secret file: %w", err)
 	}
@@ -133,7 +133,8 @@ func getOauth2TokenFromWeb(config *oauth2.Config) (*oauth2.Token, error) {
 
 // getOauth2TokenFromFile retrieves a token from a local file.
 func getOauth2TokenFromFile(tf string) (*oauth2.Token, error) {
-	d, err := ioutil.ReadFile(tf)
+	//#nosec G304
+	d, err := os.ReadFile(tf)
 	if err == nil {
 		tok := &oauth2.Token{}
 		if err = json.Unmarshal(d, tok); err == nil {
@@ -145,7 +146,8 @@ func getOauth2TokenFromFile(tf string) (*oauth2.Token, error) {
 
 // saveToken saves a token to a file path.
 func saveToken(tf string, token *oauth2.Token) error {
-	f, err := os.OpenFile(tf, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
+	//#nosec G304
+	f, err := os.OpenFile(tf, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o600)
 	if err != nil {
 		return fmt.Errorf("unable to cache oauth token: %w", err)
 	}

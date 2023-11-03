@@ -8,7 +8,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -79,8 +79,8 @@ func doJSON(req *http.Request, apiKey string, out interface{}) error {
 	if err != nil {
 		return err
 	}
-	b, err := ioutil.ReadAll(resp.Body)
-	resp.Body.Close()
+	b, err := io.ReadAll(resp.Body)
+	_ = resp.Body.Close()
 	if err != nil {
 		return fmt.Errorf("do reading: %w", err)
 	}
